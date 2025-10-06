@@ -2,6 +2,8 @@
 
 A customizable and animated Mac-style keyboard component for Svelte. It visually responds to both keyboard and mouse events.
 
+![Svelte Mac Keyboard Preview](https://static.timoweiss.me/Screenshot%202025-10-06%20at%2020.45.39.png)
+
 ## Setup and Running the Project
 
 1.  **Clone the repository:**
