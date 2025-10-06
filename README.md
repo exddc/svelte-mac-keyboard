@@ -1,38 +1,61 @@
-# sv
+# Svelte Mac Keyboard
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A customizable and animated Mac-style keyboard component for Svelte. It visually responds to both keyboard and mouse events.
 
-## Creating a project
+## Setup and Running the Project
 
-If you're seeing this, you've probably already done this step. Congrats!
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/timoweiss/svelte-mac-keyboard.git
+    cd svelte-mac-keyboard
+    ```
 
-```sh
-# create a new project in the current directory
-npx sv create
+2.  **Install dependencies:**
+    ```sh
+    bun install
+    ```
 
-# create a new project in my-app
-npx sv create my-app
-```
+3.  **Run the development server:**
+    ```sh
+    bun run dev
+    ```
+    The application will be available at `http://localhost:5173`.
 
-## Developing
+## How to Use in Another Project
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1.  **Copy the component:**
+    Copy the `keyboard.svelte` file from `src/lib/components/` into your own Svelte project's components directory. Also, copy the `utils.ts` file from `src/lib/` for class name utility if you didn't install shadcn/ui yet.
 
-```sh
-npm run dev
+2.  **Import the component:**
+    In your Svelte file, import the `Keyboard` component:
+    ```svelte
+    <script lang="ts">
+        import Keyboard from './path/to/keyboard.svelte';
+    </script>
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+    <Keyboard />
+    ```
 
-## Building
+## Customization
 
-To create a production version of your app:
+You can customize the keyboard's appearance and layout directly within the `keyboard.svelte` file.
 
-```sh
-npm run build
-```
+-   **Styling:**
+    Modify the style constants at the top of the script section to change colors, fonts, and borders.
+    ```javascript
+    const BG_COLOR = 'bg-[#67666b]';
+    const KEY_BG_COLOR = 'bg-[#161920]';
+    // ... and so on
+    ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+-   **Layout:**
+    The `keyboardLayout` array defines the structure of the keyboard. You can add, remove, or reorder keys by editing this array. Each key object can have properties like `code`, `label`, `size`, etc.
+    ```javascript
+    const keyboardLayout: Key[][] = [
+        [
+            { code: 'Backquote', label: '`', shiftLabel: '~' },
+            // ... more keys
+        ],
+        // ... more rows
+    ];
+    ```

@@ -21,6 +21,8 @@
 			</h1>
 			<p class="mt-4 text-lg text-zinc-600 sm:text-xl">
 				Customizable and animated Mac-style keyboard component for Svelte.
+				<br />
+				Reacts to keyboard events and mouse events.
 			</p>
 		</div>
 
