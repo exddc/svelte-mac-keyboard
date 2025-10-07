@@ -40,7 +40,7 @@
 						class="rounded-md px-3 py-1 font-medium transition-colors {theme === 'light'
 							? 'bg-white text-zinc-800 shadow-sm'
 							: 'text-zinc-600'}"
-						on:click={() => (theme = 'light')}
+						onclick={() => (theme = 'light')}
 					>
 						Light
 					</button>
@@ -48,7 +48,7 @@
 						class="rounded-md px-3 py-1 font-medium transition-colors {theme === 'dark'
 							? 'bg-white text-zinc-800 shadow-sm'
 							: 'text-zinc-600'}"
-						on:click={() => (theme = 'dark')}
+						onclick={() => (theme = 'dark')}
 					>
 						Dark
 					</button>
