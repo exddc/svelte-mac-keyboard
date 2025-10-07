@@ -16,12 +16,14 @@
 		Power
 	} from 'lucide-svelte';
 	import { cn } from '$lib/utils';
+	import { themes } from '$lib/colors';
 
 	// Props
 	const {
 		class: className,
-		showFunctionRow = true
-	}: { class?: string; showFunctionRow?: boolean } = $props();
+		showFunctionRow = true,
+		theme = 'dark'
+	}: { class?: string; showFunctionRow?: boolean; theme?: 'dark' | 'light' } = $props();
 
 	// Types
 	type Key = {
@@ -35,15 +37,12 @@
 		icon?: ComponentType;
 	};
 
+	// State
+	const selectedTheme = $derived(themes[theme]);
+
 	// Constants
-	const BG_COLOR = 'bg-[#67666b]';
-	const KEY_BG_COLOR = 'bg-[#161920]';
-	const KEY_TEXT_COLOR = 'text-[#c2c5ca]';
-	const KEY_ACTIVE_BG_COLOR = 'bg-[#1f2125]';
-	const BORDER_COLOR = 'border-transparent';
-	const KEY_BORDER_RADIUS = 'rounded-md';
 	const FONT_FAMILY = 'font-sans';
-	const KEY_INSET_BORDER_COLOR = 'border-b-zinc-700';
+	const KEY_BORDER_RADIUS = 'rounded-md';
 
 	const keyboardLayout: Key[][] = [
 		[
@@ -170,9 +169,9 @@
 <div id="keyboard" class={cn(className, 'mx-auto w-full max-w-3xl')}>
 	<div
 		class={cn(
-			'flex w-full flex-col gap-1 rounded-lg border p-1 shadow-lg',
-			BG_COLOR,
-			BORDER_COLOR,
+			'flex w-full flex-col gap-1 rounded-lg border-2 p-1 shadow-lg',
+			selectedTheme.bgColor,
+			selectedTheme.borderColor,
 			FONT_FAMILY,
 			className
 		)}
@@ -184,12 +183,12 @@
 						class={cn(
 							'flex min-h-[50px] basis-0 cursor-pointer flex-col items-stretch justify-center border-b-2 px-2 py-1 text-sm transition-all duration-75 ease-in-out focus:outline-none',
 							KEY_BORDER_RADIUS,
-							KEY_TEXT_COLOR,
-							KEY_INSET_BORDER_COLOR,
+							selectedTheme.keyTextColor,
+							selectedTheme.keyInsetBorderColor,
 							{
 								'translate-y-px border-b-0': pressedKeys[key.code]
 							},
-							pressedKeys[key.code] ? KEY_ACTIVE_BG_COLOR : KEY_BG_COLOR,
+							pressedKeys[key.code] ? selectedTheme.keyActiveBgColor : selectedTheme.keyBgColor,
 							{ 'justify-end': key.valign === 'bottom' }
 						)}
 						style="flex-grow: {key.size || 1}; text-align: {key.align || 'center'};"

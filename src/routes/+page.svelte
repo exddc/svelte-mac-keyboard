@@ -1,14 +1,15 @@
 <script lang="ts">
 	import CodeBlock from '$lib/components/CodeBlock.svelte';
-	import Keyboard from '$lib/components/keyboard.svelte';
+	import Keyboard from '$lib/components/Keyboard.svelte';
 
-	let showFunctionKeys = $state(true);
+	let showFunctionRow = $state(true);
+	let theme = $state<'dark' | 'light'>('dark');
 
-	const codeSnippet = $state(`<script lang="ts">
-    import Keyboard from '$lib/components/keyboard.svelte';
+	const codeSnippet = $derived(`<script lang="ts">
+    import Keyboard from '$lib/components/Keyboard.svelte';
 <\/script>
 
-<Keyboard />`);
+<Keyboard showFunctionRow={${showFunctionRow}} theme={'${theme}'} />`);
 </script>
 
 <div class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
@@ -30,17 +31,35 @@
 
 		<div class="flex w-full flex-col justify-end gap-6">
 			<div class="flex w-full flex-col justify-end" style="min-height: 330px">
-				<Keyboard showFunctionRow={showFunctionKeys} />
+				<Keyboard {showFunctionRow} {theme} />
 			</div>
 
-			<div class="flex items-center justify-center">
-				<label for="toggle" class="flex cursor-pointer items-center">
+			<div class="flex items-center justify-center gap-8">
+				<div class="flex items-center rounded-lg bg-zinc-200 p-1 text-sm">
+					<button
+						class="rounded-md px-3 py-1 font-medium transition-colors {theme === 'light'
+							? 'bg-white text-zinc-800 shadow-sm'
+							: 'text-zinc-600'}"
+						on:click={() => (theme = 'light')}
+					>
+						Light
+					</button>
+					<button
+						class="rounded-md px-3 py-1 font-medium transition-colors {theme === 'dark'
+							? 'bg-white text-zinc-800 shadow-sm'
+							: 'text-zinc-600'}"
+						on:click={() => (theme = 'dark')}
+					>
+						Dark
+					</button>
+				</div>
+				<label for="toggle-function-row" class="flex cursor-pointer items-center">
 					<div class="relative">
 						<input
 							type="checkbox"
-							id="toggle"
+							id="toggle-function-row"
 							class="peer sr-only"
-							bind:checked={showFunctionKeys}
+							bind:checked={showFunctionRow}
 						/>
 						<div
 							class="h-6 w-11 rounded-full bg-zinc-300 transition-colors peer-checked:bg-blue-500"

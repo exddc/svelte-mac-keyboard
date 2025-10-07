@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { BROWSER } from 'esm-env';
-	import { onMount } from 'svelte';
 	import { codeToHtml } from 'shiki';
 
 	const {
@@ -13,13 +12,15 @@
 
 	let highlightedCode = $state('');
 
-	onMount(async () => {
-		if (BROWSER) {
-			highlightedCode = await codeToHtml(code, {
-				lang,
-				theme: 'github-dark'
-			});
-		}
+	$effect(() => {
+		(async () => {
+			if (BROWSER) {
+				highlightedCode = await codeToHtml(code, {
+					lang,
+					theme: 'github-dark'
+				});
+			}
+		})();
 	});
 </script>
 
