@@ -1,12 +1,12 @@
 <script lang="ts">
 	import CodeBlock from '$lib/components/CodeBlock.svelte';
-	import Keyboard from '$lib/components/Keyboard.svelte';
+	import Keyboard from '$lib/components/keyboard.svelte';
 
 	let showFunctionRow = $state(true);
 	let theme = $state<'dark' | 'light'>('dark');
 
 	const codeSnippet = $derived(`<script lang="ts">
-    import Keyboard from '$lib/components/Keyboard.svelte';
+    import Keyboard from '$lib/components/keyboard.svelte';
 <\/script>
 
 <Keyboard showFunctionRow={${showFunctionRow}} theme={'${theme}'} />`);
