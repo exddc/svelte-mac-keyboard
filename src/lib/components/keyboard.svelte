@@ -1,9 +1,27 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, type ComponentType } from 'svelte';
+	import {
+		SunDim,
+		Sun,
+		PanelTop,
+		Search,
+		Mic,
+		Moon,
+		Rewind,
+		Play,
+		FastForward,
+		VolumeX,
+		Volume1,
+		Volume2,
+		Power
+	} from 'lucide-svelte';
 	import { cn } from '$lib/utils';
 
 	// Props
-	const { class: className }: { class?: string } = $props();
+	const {
+		class: className,
+		showFunctionRow = true
+	}: { class?: string; showFunctionRow?: boolean } = $props();
 
 	// Types
 	type Key = {
@@ -12,7 +30,9 @@
 		shiftLabel?: string;
 		size?: number;
 		align?: 'left' | 'right' | 'center';
+		valign?: 'top' | 'bottom' | 'center';
 		symbol?: string;
+		icon?: ComponentType;
 	};
 
 	// Constants
@@ -98,8 +118,27 @@
 		]
 	];
 
+	const functionKeyRow: Key[] = [
+		{ code: 'Escape', label: 'esc', size: 1.75, align: 'left', valign: 'bottom' },
+		{ code: 'F1', label: 'F1', icon: SunDim },
+		{ code: 'F2', label: 'F2', icon: Sun },
+		{ code: 'F3', label: 'F3', icon: PanelTop },
+		{ code: 'F4', label: 'F4', icon: Search },
+		{ code: 'F5', label: 'F5', icon: Mic },
+		{ code: 'F6', label: 'F6', icon: Moon },
+		{ code: 'F7', label: 'F7', icon: Rewind },
+		{ code: 'F8', label: 'F8', icon: Play },
+		{ code: 'F9', label: 'F9', icon: FastForward },
+		{ code: 'F10', label: 'F10', icon: VolumeX },
+		{ code: 'F11', label: 'F11', icon: Volume1 },
+		{ code: 'F12', label: 'F12', icon: Volume2 },
+		{ code: 'Power', label: '', icon: Power, size: 1, align: 'center' }
+	];
+
 	// State
 	let pressedKeys = $state<Record<string, boolean>>({});
+
+	const allRows = $derived(showFunctionRow ? [functionKeyRow, ...keyboardLayout] : keyboardLayout);
 
 	// Functions
 	function handleKeyDown(event: KeyboardEvent) {
@@ -138,9 +177,9 @@
 			className
 		)}
 	>
-		{#each keyboardLayout as row}
+		{#each allRows as row (row[0].code)}
 			<div class="flex w-full justify-center gap-1">
-				{#each row as key}
+				{#each row as key (key.code)}
 					<button
 						class={cn(
 							'flex min-h-[50px] basis-0 cursor-pointer flex-col items-stretch justify-center border-b-2 px-2 py-1 text-sm transition-all duration-75 ease-in-out focus:outline-none',
@@ -150,14 +189,23 @@
 							{
 								'translate-y-px border-b-0': pressedKeys[key.code]
 							},
-							pressedKeys[key.code] ? KEY_ACTIVE_BG_COLOR : KEY_BG_COLOR
+							pressedKeys[key.code] ? KEY_ACTIVE_BG_COLOR : KEY_BG_COLOR,
+							{ 'justify-end': key.valign === 'bottom' }
 						)}
-						style="flex-grow: {key.size || 1}; text-align: {key.align || 'center'}"
+						style="flex-grow: {key.size || 1}; text-align: {key.align || 'center'};"
 						onmousedown={() => handleMouseDown(key.code)}
 						onmouseup={() => handleMouseUp(key.code)}
 						onmouseleave={() => handleMouseUp(key.code)}
 					>
-						{#if key.shiftLabel}
+						{#if key.icon}
+							{@const Icon = key.icon}
+							<div class="flex flex-col items-center leading-none">
+								<Icon class="size-[12px]" stroke-width="0.75" />
+								{#if key.label}
+									<div class="mt-[10px] text-[8px] font-medium tracking-wider">{key.label}</div>
+								{/if}
+							</div>
+						{:else if key.shiftLabel}
 							<div class="px-1 text-xs">{key.shiftLabel}</div>
 							<div class="px-1 text-base">{key.label}</div>
 						{:else}
@@ -167,10 +215,14 @@
 								{:else if key.symbol && key.label}
 									<div class="leading-none">
 										<div class="text-lg font-light">{key.symbol}</div>
-										<div class="mt-0.5 text-[10px] tracking-wider">{key.label}</div>
+										<div class="mt-0.5 text-[10px] font-medium tracking-wider">{key.label}</div>
 									</div>
 								{:else}
-									<span class="text-sm leading-none">{key.label}</span>
+									<span
+										class={cn('text-sm leading-none', {
+											'text-[10px]': key.code === 'Escape'
+										})}>{key.label}</span
+									>
 								{/if}
 							</div>
 						{/if}

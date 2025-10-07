@@ -42,6 +42,13 @@ A customizable and animated Mac-style keyboard component for Svelte. It visually
 
 You can customize the keyboard's appearance and layout directly within the `keyboard.svelte` file.
 
+-   **Props:**
+    You can customize the keyboard's behavior with the following props:
+    -   `showFunctionRow`: A boolean to show or hide the function key row (default: `true`).
+        ```svelte
+        <Keyboard showFunctionRow={false} />
+        ```
+
 -   **Styling:**
     Modify the style constants at the top of the script section to change colors, fonts, and borders.
     ```javascript

@@ -2,6 +2,8 @@
 	import CodeBlock from '$lib/components/CodeBlock.svelte';
 	import Keyboard from '$lib/components/keyboard.svelte';
 
+	let showFunctionKeys = $state(true);
+
 	const codeSnippet = $state(`<script lang="ts">
     import Keyboard from '$lib/components/keyboard.svelte';
 <\/script>
@@ -26,7 +28,31 @@
 			</p>
 		</div>
 
-		<Keyboard />
+		<div class="flex w-full flex-col justify-end gap-6">
+			<div class="flex w-full flex-col justify-end" style="min-height: 330px">
+				<Keyboard showFunctionRow={showFunctionKeys} />
+			</div>
+
+			<div class="flex items-center justify-center">
+				<label for="toggle" class="flex cursor-pointer items-center">
+					<div class="relative">
+						<input
+							type="checkbox"
+							id="toggle"
+							class="peer sr-only"
+							bind:checked={showFunctionKeys}
+						/>
+						<div
+							class="h-6 w-11 rounded-full bg-zinc-300 transition-colors peer-checked:bg-blue-500"
+						></div>
+						<div
+							class="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform peer-checked:translate-x-full"
+						></div>
+					</div>
+					<div class="ml-3 text-sm text-zinc-600">Show Function Keys</div>
+				</label>
+			</div>
+		</div>
 
 		<div class="mx-auto max-w-2xl text-center">
 			<h2 class="text-3xl font-bold tracking-tight text-zinc-800">How to Use</h2>
