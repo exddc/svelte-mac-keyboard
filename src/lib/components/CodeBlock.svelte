@@ -24,6 +24,13 @@
 	});
 </script>
 
-<div class="overflow-x-auto rounded-lg p-4">
+<div class="overflow-x-auto rounded-lg p-4 text-sm sm:text-base">
 	{@html highlightedCode}
 </div>
+
+<style>
+	:global(pre) {
+		white-space: pre-wrap;
+		word-break: break-all;
+	}
+</style>

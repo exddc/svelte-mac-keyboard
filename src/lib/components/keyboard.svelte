@@ -169,7 +169,7 @@
 <div id="keyboard" class={cn(className, 'mx-auto w-full max-w-3xl')}>
 	<div
 		class={cn(
-			'flex w-full flex-col gap-1 rounded-lg border-2 p-1 shadow-lg',
+			'flex w-full flex-col gap-0.5 rounded-lg border-2 p-0.5 shadow-lg sm:gap-1 sm:p-1',
 			selectedTheme.bgColor,
 			selectedTheme.borderColor,
 			FONT_FAMILY,
@@ -177,11 +177,11 @@
 		)}
 	>
 		{#each allRows as row (row[0].code)}
-			<div class="flex w-full justify-center gap-1">
+			<div class="flex w-full justify-center gap-0.5 sm:gap-1">
 				{#each row as key (key.code)}
 					<button
 						class={cn(
-							'flex min-h-[50px] basis-0 cursor-pointer flex-col items-stretch justify-center border-b-2 px-2 py-1 text-sm transition-all duration-75 ease-in-out focus:outline-none',
+							'flex min-h-[32px] basis-0 cursor-pointer flex-col items-stretch justify-center border-b-2 px-1 py-0.5 text-xs transition-all duration-75 ease-in-out focus:outline-none sm:min-h-[50px] sm:px-2 sm:py-1 sm:text-sm',
 							KEY_BORDER_RADIUS,
 							selectedTheme.keyTextColor,
 							selectedTheme.keyInsetBorderColor,
@@ -199,27 +199,33 @@
 						{#if key.icon}
 							{@const Icon = key.icon}
 							<div class="flex flex-col items-center leading-none">
-								<Icon class="size-[12px]" stroke-width="0.75" />
+								<Icon class="size-[8px] sm:size-[12px]" stroke-width="0.75" />
 								{#if key.label}
-									<div class="mt-[10px] text-[8px] font-medium tracking-wider">{key.label}</div>
+									<div
+										class="mt-[6px] text-[4px] font-medium tracking-wider sm:mt-[10px] sm:text-[8px]"
+									>
+										{key.label}
+									</div>
 								{/if}
 							</div>
 						{:else if key.shiftLabel}
-							<div class="px-1 text-xs">{key.shiftLabel}</div>
-							<div class="px-1 text-base">{key.label}</div>
+							<div class="px-1 text-[8px] sm:text-xs">{key.shiftLabel}</div>
+							<div class="px-1 text-[10px] sm:text-base">{key.label}</div>
 						{:else}
 							<div class="px-1">
 								{#if key.symbol && !key.label}
-									<span class="text-xl font-light">{key.symbol}</span>
+									<span class="text-[14px] font-light sm:text-xl">{key.symbol}</span>
 								{:else if key.symbol && key.label}
 									<div class="leading-none">
-										<div class="text-lg font-light">{key.symbol}</div>
-										<div class="mt-0.5 text-[10px] font-medium tracking-wider">{key.label}</div>
+										<div class="text-[14px] font-light sm:text-lg">{key.symbol}</div>
+										<div class="mt-0.5 text-[6px] font-medium tracking-wider sm:text-[10px]">
+											{key.label}
+										</div>
 									</div>
 								{:else}
 									<span
-										class={cn('text-sm leading-none', {
-											'text-[10px]': key.code === 'Escape'
+										class={cn('text-[10px] leading-none sm:text-sm', {
+											'text-[8px] sm:text-[10px]': key.code === 'Escape'
 										})}>{key.label}</span
 									>
 								{/if}

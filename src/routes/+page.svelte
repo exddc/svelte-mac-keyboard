@@ -30,11 +30,11 @@
 		</div>
 
 		<div class="flex w-full flex-col justify-end gap-6">
-			<div class="flex w-full flex-col justify-end" style="min-height: 330px">
+			<div class="flex min-h-[260px] w-full flex-col justify-end sm:min-h-[330px]">
 				<Keyboard {showFunctionRow} {theme} />
 			</div>
 
-			<div class="flex items-center justify-center gap-8">
+			<div class="flex items-center justify-center gap-4 sm:gap-8">
 				<div class="flex items-center rounded-lg bg-zinc-200 p-1 text-sm">
 					<button
 						class="rounded-md px-3 py-1 font-medium transition-colors {theme === 'light'
